@@ -30,15 +30,14 @@ describe Venice::Receipt do
     }
     subject { Venice::Receipt.new(response['receipt']) }
 
-    its(:quantity) { 1 }
-    its(:product_id) { "com.foo.product1" }
-    its(:transaction_id) { "1000000070107235" }
-    its(:unique_identifier) { "0000b031c818" }
-    its(:purchase_date) { should be_instance_of DateTime }
-    its(:bvrs) { "0.1" }
-    its(:bid) { "com.foo.bar" }
-    its(:original) { should be_instance_of Venice::Receipt }
-    its(:expires_at) { should be_instance_of Time }
+    it { expect(subject.quantity).to eql 1 }
+    it { expect(subject.product_id).to eql "com.foo.product1" }
+    it { expect(subject.transaction_id).to eql "1000000070107235" }
+    it { expect(subject.purchase_date).to be_instance_of DateTime }
+    it { expect(subject.bvrs).to eql "0.1" }
+    it { expect(subject.bid).to eql "com.foo.bar" }
+    it { expect(subject.original).to be_instance_of Venice::Receipt }
+    it { expect(subject.expires_at).to be_instance_of Time }
 
     it "should parse the origin attributes" do
       subject.original.transaction_id.should == "1000000061051565"
@@ -83,6 +82,7 @@ describe Venice::Receipt do
         end
 
         it "should create a latest expired receipt" do
+          receipt = Venice::Receipt.new(response['latest_expired_receipt_info'])
           receipt.latest_expired.should_not be_nil
         end
       end
