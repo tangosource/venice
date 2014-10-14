@@ -23,6 +23,9 @@ module Venice
     # The bundle identifier for the application.
     attr_reader :bid
 
+    # For a transaction that was canceled by Apple customer support
+    attr_reader :cancellation_date
+
     # A version number for the application.
     attr_reader :bvrs
 
@@ -43,6 +46,7 @@ module Venice
       @product_id = attributes['product_id']
       @transaction_id = attributes['transaction_id']
       @purchase_date = DateTime.parse(attributes['purchase_date']) if attributes['purchase_date']
+      @cancellation_date = DateTime.parse(attributes['cancellation_date']) if attributes['cancellation_date']
       @app_item_id = attributes['app_item_id']
       @version_external_identifier = attributes['version_external_identifier']
       @bid = attributes['bid']
@@ -67,6 +71,7 @@ module Venice
         :product_id => @product_id,
         :transaction_id => @transaction_id,
         :purchase_date => (@purchase_date.httpdate rescue nil),
+        :cancellation_date => (@cancellation_date.httpdate rescue nil),
         :original_transaction_id => (@original.transaction_id rescue nil),
         :original_purchase_date => (@original.purchase_date.httpdate rescue nil),
         :app_item_id => @app_item_id,
